@@ -11,7 +11,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
  */
 public class UBIDs {
 
-    public final static int version = 2;
+    public final static int version = 3;
 
     public final static NamedBlock igneousStoneName = new NamedBlock("igneousStone");
     public final static NamedBlock igneousCobblestoneName = new NamedBlock("igneousCobblestone");

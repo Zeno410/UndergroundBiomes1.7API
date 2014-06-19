@@ -19,9 +19,10 @@ public interface UBOreTexturizer {
     // that static vars are fully qualified names for all the textures in the UB pack, just pass as is
     // the event isn't needed per se, but if this is called anytime else, the blocks will not "stick"
     public void setupUBOre(Block oreBlock, String overlayName, FMLPreInitializationEvent event);
-
+    public void setupUBOre(Block oreBlock, int metadata, String overlayName, FMLPreInitializationEvent event);
 
     public void requestUBOreSetup(Block oreBlock, String overlayName) throws BlocksAreAlreadySet;
+    public void requestUBOreSetup(Block oreBlock, int metadata, String overlayName) throws BlocksAreAlreadySet;
 
     public static String amber_overlay = "undergroundbiomes:amber_overlay";
     public static String cinnabar_overlay = "undergroundbiomes:cinnabar_overlay";
