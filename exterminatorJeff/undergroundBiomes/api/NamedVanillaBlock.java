@@ -1,5 +1,4 @@
-package Zeno410Utils;
-import exterminatorJeff.undergroundBiomes.api.UBIDs;
+package exterminatorJeff.undergroundBiomes.api;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 

@@ -1,4 +1,4 @@
-package Zeno410Utils;
+package exterminatorJeff.undergroundBiomes.api;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.Item;

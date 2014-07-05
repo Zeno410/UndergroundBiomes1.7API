@@ -1,4 +1,4 @@
-package Zeno410Utils;
+package exterminatorJeff.undergroundBiomes.api;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;

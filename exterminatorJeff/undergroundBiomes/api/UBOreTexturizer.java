@@ -7,6 +7,7 @@ package exterminatorJeff.undergroundBiomes.api;
 
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import net.minecraft.block.Block;
+import net.minecraft.world.World;
 
 /**
  * This is an interface for the class that can create Underground Biomes versions of arbitary ores
@@ -20,9 +21,12 @@ public interface UBOreTexturizer {
     // the event isn't needed per se, but if this is called anytime else, the blocks will not "stick"
     public void setupUBOre(Block oreBlock, String overlayName, FMLPreInitializationEvent event);
     public void setupUBOre(Block oreBlock, int metadata, String overlayName, FMLPreInitializationEvent event);
+    public void setupUBOre(Block oreBlock, int metadata, String overlayName, String blockName, FMLPreInitializationEvent event);
 
     public void requestUBOreSetup(Block oreBlock, String overlayName) throws BlocksAreAlreadySet;
     public void requestUBOreSetup(Block oreBlock, int metadata, String overlayName) throws BlocksAreAlreadySet;
+    public void requestUBOreSetup(Block oreBlock, int metadata, String overlayName, String blockName) throws BlocksAreAlreadySet;
+    public void redoOres(int xInBlockCoordinates, int zInBlockCoordinates, World serverSideWorld) ;
 
     public static String amber_overlay = "undergroundbiomes:amber_overlay";
     public static String cinnabar_overlay = "undergroundbiomes:cinnabar_overlay";
@@ -51,6 +55,7 @@ public interface UBOreTexturizer {
             this.overlayName = overlayName;
         }
 
+        @Override
         public String toString() {
             String blockDescription = "undefined block";
             String overlayDescription = "undefined overlay";

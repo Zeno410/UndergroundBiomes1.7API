@@ -1,6 +1,5 @@
-package Zeno410Utils;
+package exterminatorJeff.undergroundBiomes.api;
 
-import exterminatorJeff.undergroundBiomes.api.UBIDs;
 
 /**
  *
