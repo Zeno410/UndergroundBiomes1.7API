@@ -16,4 +16,6 @@ public class BlockLocationProbe extends BlockLocation{
     public void setY(int newY) {super.setY(newY);}
     public void setZ(int newZ) {super.setZ(newZ);}
 
+    public BlockLocation forStorage() {return new BlockLocation(x(),y(),z());}
+
 }

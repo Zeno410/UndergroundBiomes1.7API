@@ -28,8 +28,8 @@ public class BlockLocation {
     public final int z() {return z;}
 
     void setX(int newX) {x = newX;}
-    void setY(int newY) {x = newY;}
-    void setZ(int newZ) {x = newZ;}
+    void setY(int newY) {y = newY;}
+    void setZ(int newZ) {z = newZ;}
 
     @Override
     public int hashCode() {

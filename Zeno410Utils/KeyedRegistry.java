@@ -34,4 +34,6 @@ public class KeyedRegistry<Key,Type> {
         items.remove(toRemove);
     }
 
+    public int size() {return items.size();}
+
 }

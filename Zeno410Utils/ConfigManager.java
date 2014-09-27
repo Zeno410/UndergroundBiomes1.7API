@@ -2,6 +2,8 @@
 package Zeno410Utils;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.PatternSyntaxException;
 import net.minecraftforge.common.config.Configuration;
@@ -22,7 +24,7 @@ public class ConfigManager<Type extends Settings> {
     public ConfigManager(Configuration general, Type settings, File generalFile) {
         this.general = general;
         this.settings = settings;
-        this.generalConfigFile  = generalFile;;
+        this.generalConfigFile  = generalFile;
     }
 
     private boolean usable(File tested) {
@@ -60,27 +62,19 @@ public class ConfigManager<Type extends Settings> {
     public void setWorldFile(File newFile) {
         // this is the world save directory
         String configDirectoryName = newFile.getAbsoluteFile()+File.separator+CONFIG_DIRECTORY;
-        File configDirectory = new File(configDirectoryName);
+        File configDirectory = new File(newFile,CONFIG_DIRECTORY);
         configDirectory.mkdir();
+
         String configName = generalConfigFile.getPath();
-        String[] parts;
-        try {
-            parts = configName.split(File.separator);
-            String configFileName = configDirectoryName+File.separator+parts[parts.length-1];
-            setWorldConfigFile(new File(configFileName));
-        } catch (PatternSyntaxException e) {
-            try {
-                parts = configName.split(File.pathSeparator);
-                String configFileName = configDirectoryName+File.pathSeparator+parts[parts.length-1];
-                setWorldConfigFile(new File(configFileName));
-            } catch (PatternSyntaxException e2) {
-                if (configName != null) {
-                    logger.info(File.separator);
-                    logger.info(File.pathSeparator);
-                    logger.info(configName);
-                }
-                setWorldConfigFile(null);
-            }
-        }
+        String generalConfigDirectoryName = generalConfigFile.getParentFile().getPath();
+        String detailName = configName.substring(generalConfigDirectoryName.length()+1);
+        logger.info("Filename "+detailName);
+        File localConfigFile = new File(configDirectory,detailName);
+        setWorldConfigFile(localConfigFile);
+    }
+
+    public String lastFile(String multipath) {
+        String [] parts = multipath.split(File.separator);
+        return parts[parts.length -1];
     }
 }

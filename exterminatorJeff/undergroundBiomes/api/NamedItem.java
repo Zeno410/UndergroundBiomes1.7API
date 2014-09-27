@@ -2,6 +2,7 @@ package exterminatorJeff.undergroundBiomes.api;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.Item;
+import net.minecraft.init.Items;
 import net.minecraft.util.IIcon;
 
 public class NamedItem extends Names {
@@ -34,7 +35,10 @@ public class NamedItem extends Names {
     }
 
     public Item cachedItem() {
-        if (item == null) throw new RuntimeException(this.internal()+ " has no item");
+        if (item == null) {
+            item = (Item)(Item.itemRegistry.getObject(this.external()));
+            if (item == null) throw new RuntimeException(this.internal()+ " has no item");
+        }
         return item;
     }
 

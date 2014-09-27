@@ -53,6 +53,9 @@ public final class UndergroundBiomesSettings extends Settings {
     public final Mutable<Boolean> replaceCobblestone= this.general().booleanSetting(
             "replaceCobblestone", true, "Swap vanilla cobble and slabs with Underground Biomes where appropriate, plus some village changes");
 
+    public final Mutable<Boolean> imposeUBStone = this.general().booleanSetting(
+            "ImposeUBStone", "Impose UB stone on other mods specially programmed for (currently Highlands)", true);
+
     public final Mutable<Boolean> replaceVillageGravel= this.general().booleanSetting(
             "ReplaceVillageGravel", false, "Replace village gravel with brick");
 
@@ -60,7 +63,7 @@ public final class UndergroundBiomesSettings extends Settings {
             "CrashOnProblems", false, "Crash rather than try to get by when encountering problems");
 
     public final Mutable<Boolean> clearVarsForRecursiveGeneration = this.general().booleanSetting(
-            "clearVarsForRecursiveGeneration", true, "Clear the world var in BiomeGenBase for recursive generation");
+            "clearVarsForRecursiveGeneration", false, "Clear the world var in BiomeGenBase for recursive generation");
 
     public final Mutable<Boolean> forceConfigIds= this.general().booleanSetting(
             "ForceConfigIds", false, "(for worlds created pre-1.7) Force IDs to config values");
