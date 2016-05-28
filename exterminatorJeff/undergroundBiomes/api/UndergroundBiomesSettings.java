@@ -5,6 +5,7 @@ import Zeno410Utils.*;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
+import java.util.HashMap;
 
 /**
  *
@@ -28,10 +29,37 @@ public final class UndergroundBiomesSettings extends Settings {
 
         };
     }
-    
+
+    public UndergroundBiomesSettings(String [] igneousNames, String [] metamorphicNames, String [] sedimentaryNames) {
+        setActivations(UBIDs.igneousStoneName,"igneous stone",igneousNames);
+        setActivations(UBIDs.metamorphicStoneName,"metamorphic stone",metamorphicNames);
+        setActivations(UBIDs.sedimentaryStoneName,"sedimentary stone",sedimentaryNames);
+        setActivation(NamedVanillaBlock.sand,0);
+        setActivation(NamedVanillaBlock.sandstone,0);
+        setActivation(NamedVanillaBlock.stone,0);
+    }
+
     private final Category blockCategory = category("block");
     private final Category itemCategory = category("item");
+    private final Category generationCategory = category("generation");
 
+    private void setActivations(NamedBlock block, String type, String [] names) {
+        HashMap<Integer,Mutable<Boolean>> blockActivations = new HashMap<Integer,Mutable<Boolean>>();
+        this.stoneGenerationSettings.put(block, blockActivations);
+        for (int i = 0; i < names.length;i++) {
+            Mutable<Boolean> generationConfig = generationCategory.booleanSetting("Generate "+ type +
+                    " metadata " + i + ", " +names[i], true,"");
+            blockActivations.put(i, generationConfig);
+        }
+    }
+
+    private void setActivation(NamedBlock block, int metadata) {
+        HashMap<Integer,Mutable<Boolean>> blockActivations = new HashMap<Integer,Mutable<Boolean>>();
+        this.stoneGenerationSettings.put(block, blockActivations);
+       Mutable<Boolean> generationConfig = generationCategory.booleanSetting(
+               "Generate "+ block.internal() +", metadata " + metadata, true,"");
+        blockActivations.put(metadata, generationConfig);
+    }
     public final Mutable<Boolean> addOreDictRecipes = this.general().booleanSetting(
             "oreDictifyStone", true, "Modify all recipes to include Underground Biomes blocks");
     
@@ -102,11 +130,20 @@ public final class UndergroundBiomesSettings extends Settings {
     public final Mutable<Boolean>  inChunkGeneration = this.general().booleanSetting(
             "InChunkGeneration", true,"Change stones during chunk generation");
 
+    public final Mutable<Boolean> newGeneration = this.general().booleanSetting(
+            "newGeneration", false,"Run generation as late as possible (slower but more compatible). Needs inChunk on");
+
     public final Mutable<String> inChunkGenerationExclude = this.general().stringSetting(
             "inChunkDimensionExclusions", "-1,1", "Comma-separated list of dimension to only use old decoration-phase generation, used only if inclusion list is *");
 
     public final Mutable<String> inChunkGenerationInclude = this.general().stringSetting(
             "inChunkDimensionInclusions", "0", "Comma-separated list of dimension IDs to allow new chunk-phase decoration, put * to use exclusion list");
+
+    public final Mutable<Double> brickHardnessMultiplier = this.general().doubleSetting("brickHardnessMultiplier",
+            1.0D, "UB brick hardness is this multiple of UB stone");
+
+    public final Mutable<Double> cobbleHardnessMultiplier = this.general().doubleSetting("cobbleHardnessMultiplier",
+            1.3333333D, "UB cobble hardness is this multiple of UB stone");
 
     public final Mutable<Integer> ligniteCoalID = this.blockCategory.intSetting("Lignite Item ID:", 5500);
     public final Mutable<Integer> fossilPieceID = this.itemCategory.intSetting("fossilPiece", 5501);
@@ -146,4 +183,13 @@ public final class UndergroundBiomesSettings extends Settings {
     public final Mutable<Integer> stoneStairID = this.blockCategory.intSetting("Universal Biomes Stairs ID:", 212);
     public final Mutable<Integer> stoneWallID = this.blockCategory.intSetting("Universal Biomes Wall ID:", 213);
     public final Mutable<Integer> stoneButtonID = this.blockCategory.intSetting("Universal Biomes Button ID:", 214);
+
+    private final HashMap<NamedBlock,HashMap<Integer,Mutable<Boolean>>> stoneGenerationSettings =
+            new HashMap<NamedBlock,HashMap<Integer,Mutable<Boolean>>>();
+
+    public final boolean generationAllowed(NamedBlock block, int metadata) {
+        HashMap<Integer,Mutable<Boolean>> info = stoneGenerationSettings.get(block);
+        if (info == null) return true;
+        return info.get(metadata).value();
+    }
 }

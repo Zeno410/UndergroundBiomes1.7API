@@ -20,10 +20,12 @@ public interface UBOreTexturizer {
     // that static vars are fully qualified names for all the textures in the UB pack, just pass as is
     // the event isn't needed per se, but if this is called anytime else, the blocks will not "stick"
     public void setupUBOre(Block oreBlock, String overlayName, FMLPreInitializationEvent event);
+    @Deprecated
     public void setupUBOre(Block oreBlock, int metadata, String overlayName, FMLPreInitializationEvent event);
     public void setupUBOre(Block oreBlock, int metadata, String overlayName, String blockName, FMLPreInitializationEvent event);
 
     public void requestUBOreSetup(Block oreBlock, String overlayName) throws BlocksAreAlreadySet;
+    @Deprecated
     public void requestUBOreSetup(Block oreBlock, int metadata, String overlayName) throws BlocksAreAlreadySet;
     public void requestUBOreSetup(Block oreBlock, int metadata, String overlayName, String blockName) throws BlocksAreAlreadySet;
     public void redoOres(int xInBlockCoordinates, int zInBlockCoordinates, World serverSideWorld) ;
@@ -42,6 +44,7 @@ public interface UBOreTexturizer {
     public static String redstone_overlay = "undergroundbiomes:redstone_overlay";
     public static String ruby_overlay = "undergroundbiomes:ruby_overlay";
     public static String sapphire_overlay = "undergroundbiomes:sapphire_overlay";
+    public static String silver_overlay = "undergroundbiomes:silver_overlay";
     public static String tin_overlay = "undergroundbiomes:tin_overlay";
     public static String uranium_overlay = "undergroundbiomes:uranium_overlay";
 
